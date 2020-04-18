@@ -1,270 +1,177 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
-
-    <title>Exemplo de formulário para checkout usando Bootstrap</title>
-
-    <!-- Principal CSS do Bootstrap -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Estilos customizados para esse template -->
-    <link href="form-validation.css" rel="stylesheet">
-  </head>
-
-  <body class="bg-light">
-
     <div class="container">
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h2>Formulário de checkout</h2>
-        <p class="lead">Abaixo temos um exemplo de formulário construído com controles de formulário Bootstrap. Cada campo obrigatório possui um estado de validação que é ativado quando tenta-se enviar o formulário sem completá-lo.</p>
+        <h2>Cadastro de Alunos</h2>
+        <p class="lead">Preencha o formulario e faça seu cadastro</p>
       </div>
 
       <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Seu carrinho</span>
-            <span class="badge badge-secondary badge-pill">3</span>
-          </h4>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Nome do produto</h6>
-                <small class="text-muted">Breve descrição</small>
-              </div>
-              <span class="text-muted">R$12</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Segundo produto</h6>
-                <small class="text-muted">Breve descrição</small>
-              </div>
-              <span class="text-muted">R$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Terceiro item</h6>
-                <small class="text-muted">Breve descrição</small>
-              </div>
-              <span class="text-muted">R$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">Código de promoção</h6>
-                <small>CODIGOEXEMEPLO</small>
-              </div>
-              <span class="text-success">-R$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total (BRL)</span>
-              <strong>R$20</strong>
-            </li>
-          </ul>
 
-          <form class="card p-2">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Código promocional">
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-secondary">Resgatar</button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Endereço de cobrança</h4>
-          <form class="needs-validation" novalidate>
-            <div class="row">
+
+        <div class="col">
+          <h4 class="mb-3">Aluno</h4>
+          <form class="needs-validation" #cadastro = "ngForm" (submit)="cadastrar()">
+            <div class="row"><!-- Inicio da row1 -->
               <div class="col-md-6 mb-3">
-                <label for="primeiroNome">Nome</label>
-                <input type="text" class="form-control" id="primeiroNome" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                  É obrigatório inserir um nome válido.
+                <label for="primeiroNome">Nome<span class="text-muted">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]= "nome" name="nome" #nomeV="ngModel" required
+                [class.is-invalid]="nomeV.invalid && (nomeV.dirty || nomeV.touched)">
+                <small class="form-text text-muted"
+                  *ngIf="!(nomeV.invalid && (nomeV.dirty || nomeV.touched))">Informe o nome completo.</small>
+                <div *ngIf="nomeV.invalid && (nomeV.dirty || nomeV.touched)" class="invalid-feedback">
+                  <span *ngIf="nomeV.errors.required">Você precisa informar o nome!</span>
+                </div>
+
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <label for="sobrenome">data de Nascimento<span class="text-muted">*</span></label>
+                <input type="date" class="form-control" [(ngModel)]= "data" name="data" #dataV="ngModel" required
+                [class.is-invalid]="dataV.invalid && (dataV.dirty || dataV.touched)">
+                <small class="form-text text-muted"
+                  *ngIf="!(dataV.invalid && (dataV.dirty || dataV.touched))">Informe a data de nascimento.</small>
+                <div *ngIf="dataV.invalid && (dataV.dirty || dataV.touched)" class="invalid-feedback">
+                  <span *ngIf="dataV.errors.required">Você precisa informar a data de nascimento!</span>
                 </div>
               </div>
+
+              <div class="col-md-3 mb-3">
+                <label for="sobrenome">Sexo<span class="text-muted">*</span></label><br>
+                <input type="radio" id="Masculino" [(ngModel)]= "sexo" name="sexo" #sexoV="ngModel" value="Masculino" required
+                [class.is-invalid]="sexoV.invalid && (sexoV.dirty || sexoV.touched)">
+                <label for="Masculino" class="ml-1 mr-3">Masculino</label>
+                <input type="radio" id="Feminino" [(ngModel)]= "sexo" name="sexo" #sexoV="ngModel" value="Feminino" required
+                [class.is-invalid]="sexoV.invalid && (sexoV.dirty || sexoV.touched)">
+                <label for="Feminino" class="ml-1">  Feminino</label>
+                <small class="form-text text-muted"
+                  *ngIf="!(sexoV.invalid && (sexoV.dirty || sexoV.touched))">Informe o sexo.</small>
+                <div *ngIf="sexoV.invalid && (sexoV.dirty || sexoV.touched)" class="invalid-feedback">
+                  <span *ngIf="sexoV.errors.required">Você precisa informar o sexo</span>
+                </div>
+              </div>
+            </div><!-- Fim da row1 -->
+
+            <div class="row"><!-- Inicio da row2 -->
+              <div class="col-md-3 mb-3">
+                <label for="CPF">CPF <span class="text-muted">*</span></label>
+                  <input type="text" class="form-control" [(ngModel)]= "cpf" name="cpf" #cpfV="ngModel" required
+                  [class.is-invalid]="cpfV.invalid && (cpfV.dirty || cpfV.touched)">
+                  <small class="form-text text-muted"
+                  *ngIf="!(cpfV.invalid && (cpfV.dirty || cpfV.touched))">Informe o CPF.</small>
+                  <div *ngIf="cpfV.invalid && (cpfV.dirty || cpfV.touched)" class="invalid-feedback">
+                    <span *ngIf="cpfV.errors.required">Você precisa informar o CPF.</span>
+                  </div>
+              </div>
+
               <div class="col-md-6 mb-3">
-                <label for="sobrenome">Sobrenome</label>
-                <input type="text" class="form-control" id="sobrenome" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                  É obrigatório inserir um sobre nome válido.
+                <label for="email">Email <span class="text-muted">*</span></label>
+                <input type="email" class="form-control" [(ngModel)]= "email" name="email" #emailV="ngModel" placeholder="fulano@exemplo.com" required
+                [class.is-invalid]="emailV.invalid && (emailV.dirty || emailV.touched)">
+                <small class="form-text text-muted"
+                  *ngIf="!(cpfV.invalid && (cpfV.dirty || cpfV.touched))">Informe o E-mail.</small>
+                <div *ngIf="cpfV.invalid && (cpfV.dirty || cpfV.touched)" class="invalid-feedback">
+                  <span *ngIf="cpfV.errors.required">Você precisa informar o E-mail.</span>
                 </div>
               </div>
-            </div>
 
-            <div class="mb-3">
-              <label for="nickname">Nickname</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">@</span>
-                </div>
-                <input type="text" class="form-control" id="nickname" placeholder="Nickname" required>
-                <div class="invalid-feedback" style="width: 100%;">
-                  Seu nickname é obrigatório.
+              <div class=" col-md-3 mb-3">
+                <label for="endereco">Telefone<span class="text-muted">*</span></label>
+                <input type="text" class="form-control" [(ngModel)]= "telefone" name="telefone" #telefoneV="ngModel" placeholder="(00) 0000-0000" required
+                [class.is-invalid]="telefoneV.invalid && (telefoneV.dirty || telefoneV.touched)">
+                <small class="form-text text-muted"
+                  *ngIf="!(telefoneV.invalid && (telefoneV.dirty || telefoneV.touched))">Informe o numero de telefone.</small>
+                <div *ngIf="telefoneV.invalid && (telefoneV.dirty || telefoneV.touched)" class="invalid-feedback">
+                  <span *ngIf="telefoneV.errors.required">Você precisa informar o numero de telefone.</span>
                 </div>
               </div>
-            </div>
+            </div><!-- Fim da row2 -->
 
             <div class="mb-3">
-              <label for="email">Email <span class="text-muted">(Opcional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="fulano@exemplo.com">
-              <div class="invalid-feedback">
-                Por favor, insira um endereço de e-mail válido, para atualizações de entrega.
+              <label for="endereco">Endereço<span class="text-muted">*</span></label>
+              <input type="textarea" minlength=30 class="form-control"[(ngModel)]= "endereco" name="endereco" #enderecoV="ngModel" placeholder="Rua 01, nº 0" required
+              [class.is-invalid]="enderecoV.invalid && (enderecoV.dirty || enderecoV.touched)">
+              <small class="form-text text-muted"
+                  *ngIf="!(enderecoV.invalid && (enderecoV.dirty || enderecoV.touched))">Informe o endereço completo.</small>
+              <div *ngIf="enderecoV.invalid && (enderecoV.dirty || enderecoV.touched)" class="invalid-feedback">
+                <span *ngIf="enderecoV.errors">Você precisa informar o endereço completo, minimo de 30 caracteres.</span>
               </div>
             </div>
 
-            <div class="mb-3">
-              <label for="endereco">Endereço</label>
-              <input type="text" class="form-control" id="endereco" placeholder="Rua dos bobos, nº 0" required>
-              <div class="invalid-feedback">
-                Por favor, insira seu endereço de entrega.
-              </div>
-            </div>
 
-            <div class="mb-3">
-              <label for="endereco2">Endereço 2 <span class="text-muted">(Opcional)</span></label>
-              <input type="text" class="form-control" id="endereco2" placeholder="Apartamento ou casa">
-            </div>
 
             <div class="row">
-              <div class="col-md-5 mb-3">
-                <label for="pais">País</label>
-                <select class="custom-select d-block w-100" id="pais" required>
-                  <option value="">Escolha...</option>
-                  <option>Brasil</option>
-                </select>
-                <div class="invalid-feedback">
-                  Por favor, escolha um país válido.
-                </div>
-              </div>
               <div class="col-md-4 mb-3">
-                <label for="estado">Estado</label>
-                <select class="custom-select d-block w-100" id="estado" required>
+                <label for="estado">Estado<span class="text-muted">*</span></label>
+                <select class="custom-select d-block w-100 mb-1" [(ngModel)]="ufSelect" name="uf" #estadoV="ngModel" required
+                [class.is-invalid]="estadoV.invalid && (estadoV.dirty || estadoV.touched)">
                   <option value="">Escolha...</option>
-                  <option>Acre</option>
+                  <option *ngFor="let item of uf">{{item.sigla}}</option>
                 </select>
-                <div class="invalid-feedback">
-                  Por favor, insira um estado válido.
-                </div>
+                <small class="form-text text-muted"
+                  *ngIf="!(estadoV.invalid && (estadoV.dirty || estadoV.touched))">Selecione UF do estado.</small>
+              <div *ngIf="estadoV.invalid && (estadoV.dirty || estadoV.touched)" class="invalid-feedback">
+                <span *ngIf="estadoV.errors.required">Você precisa selecionar o UF do estado</span>
               </div>
+              </div>
+
               <div class="col-md-3 mb-3">
-                <label for="cep">CEP</label>
-                <input type="text" class="form-control" id="cep" placeholder="" required>
-                <div class="invalid-feedback">
-                  É obrigatório inserir um CEP.
+                <label for="cep">CEP<span class="text-muted">*</span></label>
+                <input type="text" class="form-control" id="cep" [(ngModel)]="cep" name="cep" #cepV="ngModel" required
+                [class.is-invalid]="cepV.invalid && (cepV.dirty || cepV.touched)">
+                <small class="form-text text-muted"
+                  *ngIf="!(cepV.invalid && (cepV.dirty || cepV.touched))">Informe o cep.</small>
+                <div *ngIf="cepV.invalid && (cepV.dirty || cepV.touched)" class="invalid-feedback">
+                  <span *ngIf="cepV.errors.required">Você precisa informar o cep.</span>
                 </div>
               </div>
-            </div>
-            <hr class="mb-4">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="mesmo-endereco">
-              <label class="custom-control-label" for="mesmo-endereco">Endereço de entrega é o mesmo que o de cobrança.</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="salvar-info">
-              <label class="custom-control-label" for="salvar-info">Lembrar desta informação, na próxima vez.</label>
-            </div>
-            <hr class="mb-4">
 
-            <h4 class="mb-3">Pagamento</h4>
+              <div class="col mb-3">
+                <label for="cep">Cidade<span class="text-muted">*</span></label>
+                <input type="text" class="form-control" id="cidade" [(ngModel)]="cidade" name="cidade" #cidadeV="ngModel" required
+                [class.is-invalid]="cidadeV.invalid && (cidadeV.dirty || cidadeV.touched)">
+                <small class="form-text text-muted"
+                  *ngIf="!(cepV.invalid && (cepV.dirty || cepV.touched))">Informe a cidade.</small>
+                <div *ngIf="cepV.invalid && (cepV.dirty || cepV.touched)" class="invalid-feedback">
+                  <span *ngIf="cepV.errors.required">Você precisa informar a cidade.</span>
+                </div>
+              </div>
+            </div>
 
-            <div class="d-block my-3">
-              <div class="custom-control custom-radio">
-                <input id="credito" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                <label class="custom-control-label" for="credito">Cartão de crédito</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="debito" name="paymentMethod" type="radio" class="custom-control-input" required>
-                <label class="custom-control-label" for="debito">Cartão de débito</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                <label class="custom-control-label" for="paypal">PayPal</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="cc-nome">Nome no cartão</label>
-                <input type="text" class="form-control" id="cc-nome" placeholder="" required>
-                <small class="text-muted">Nome completo, como mostrado no cartão.</small>
-                <div class="invalid-feedback">
-                  O nome que está no cartão é obrigatório.
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="cc-numero">Número do cartão de crédito</label>
-                <input type="text" class="form-control" id="cc-numero" placeholder="" required>
-                <div class="invalid-feedback">
-                  O número do cartão de crédito é obrigatório.
-                </div>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-3 mb-3">
-                <label for="cc-expiracao">Data de expiração</label>
-                <input type="text" class="form-control" id="cc-expiracao" placeholder="" required>
-                <div class="invalid-feedback">
-                  Data de expiração é obrigatória.
-                </div>
+                <label for="estado">Turmas<span class="text-muted">*</span></label>
+                <select class="custom-select d-block w-100 mb-1" multiple id="estado" [(ngModel)]="turmasSelect" name="turmas" #turmasV="ngModel" required
+                [class.is-invalid]="turmasV.invalid && (turmasV.dirty || turmasV.touched)" [disabled] = "documentosV.invalid">
+                  <option *ngFor="let item of turmas">{{item}}</option>
+                </select>
+                <small class="form-text text-muted"
+                  *ngIf="!(turmasV.invalid && (turmasV.dirty || turmasV.touched))">
+                  Selecione as turmas.<br>Utilize CTRL para multiplas seleção.
+                </small>
               </div>
-              <div class="col-md-3 mb-3">
-                <label for="cc-cvv">CVV</label>
-                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                <div class="invalid-feedback">
-                  Código de segurança é obrigatório.
-                </div>
-              </div>
+
+            </div>
+
+            <hr class="mb-4">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="endereco" [(ngModel)]="documentos" name='dacumento' #documentosV="ngModel" required
+              [class.is-invalid]="documentosV.invalid && (documentosV.dirty || documentosV.touched)">
+              <label class="custom-control-label" for="endereco">documentos validados na secretaria.</label>
             </div>
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue o checkout</button>
+            <div class="row">
+              <button class="btn btn-primary btn-lg btn-block" [disabled] = "cadastro.invalid" type="submit">Concluir cadastro</button>
+            </div>
           </form>
         </div>
       </div>
 
       <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2018 Nome da companhia</p>
+        <p class="mb-1">2020/01 Limguagem de programação para Web</p>
         <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Privacidade</a></li>
-          <li class="list-inline-item"><a href="#">Termos</a></li>
-          <li class="list-inline-item"><a href="#">Suporte</a></li>
+          <li class="list-inline-item"><a href="#">Prof. Jackson Gomes</a></li>
+          <li class="list-inline-item"><a href="#">Academico Cleiton Luiz</a></li>
         </ul>
       </footer>
     </div>
-
-    <!-- Principal JavaScript do Bootstrap
-    ================================================== -->
-    <!-- Foi colocado no final para a página carregar mais rápido -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <script>
-      // Exemplo de JavaScript para desativar o envio do formulário, se tiver algum campo inválido.
-      (function() {
-        'use strict';
-
-        window.addEventListener('load', function() {
-          // Selecione todos os campos que nós queremos aplicar estilos Bootstrap de validação customizados.
-          var forms = document.getElementsByClassName('needs-validation');
-
-          // Faz um loop neles e previne envio
-          var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-    </script>
-  </body>
-</html>
 
 <router-outlet></router-outlet>
