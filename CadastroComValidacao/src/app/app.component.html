@@ -51,7 +51,7 @@
             <div class="row"><!-- Inicio da row2 -->
               <div class="col-md-3 mb-3">
                 <label for="CPF">CPF <span class="text-muted">*</span></label>
-                  <input type="text" class="form-control" [(ngModel)]= "cpf" name="cpf" #cpfV="ngModel" required
+                  <input type="text" class="form-control" minlength=14 (keyup)="maskCPF()" [(ngModel)]= "cpf" name="cpf" #cpfV="ngModel" required
                   [class.is-invalid]="cpfV.invalid && (cpfV.dirty || cpfV.touched)">
                   <small class="form-text text-muted"
                   *ngIf="!(cpfV.invalid && (cpfV.dirty || cpfV.touched))">Informe o CPF.</small>
@@ -62,18 +62,19 @@
 
               <div class="col-md-6 mb-3">
                 <label for="email">Email <span class="text-muted">*</span></label>
-                <input type="email" class="form-control" [(ngModel)]= "email" name="email" #emailV="ngModel" placeholder="fulano@exemplo.com" required
+                <input type="email" class="form-control" (keyup)="maskEmail(emailV)" [(ngModel)]= "email" name="email" #emailV="ngModel" placeholder="fulano@exemplo.com" required
                 [class.is-invalid]="emailV.invalid && (emailV.dirty || emailV.touched)">
                 <small class="form-text text-muted"
                   *ngIf="!(cpfV.invalid && (cpfV.dirty || cpfV.touched))">Informe o E-mail.</small>
                 <div *ngIf="cpfV.invalid && (cpfV.dirty || cpfV.touched)" class="invalid-feedback">
-                  <span *ngIf="cpfV.errors.required">Você precisa informar o E-mail.</span>
+                  <span *ngIf="cpfV.errors.required">Você precisa informar um E-mail valido.</span>
+                  <span *ngIf="!emailM">Você precisa informar um E-mail valido.</span>
                 </div>
               </div>
 
               <div class=" col-md-3 mb-3">
                 <label for="endereco">Telefone<span class="text-muted">*</span></label>
-                <input type="text" class="form-control" [(ngModel)]= "telefone" name="telefone" #telefoneV="ngModel" placeholder="(00) 0000-0000" required
+                <input type="text" class="form-control" (keyup)="maskTel()" [(ngModel)]= "telefone" name="telefone" #telefoneV="ngModel" placeholder="(00) 0000-0000" required
                 [class.is-invalid]="telefoneV.invalid && (telefoneV.dirty || telefoneV.touched)">
                 <small class="form-text text-muted"
                   *ngIf="!(telefoneV.invalid && (telefoneV.dirty || telefoneV.touched))">Informe o numero de telefone.</small>
@@ -113,7 +114,7 @@
 
               <div class="col-md-3 mb-3">
                 <label for="cep">CEP<span class="text-muted">*</span></label>
-                <input type="text" class="form-control" id="cep" [(ngModel)]="cep" name="cep" #cepV="ngModel" required
+                <input type="text" class="form-control" id="cep" (keyup)="maskCep()"  [(ngModel)]="cep" name="cep" #cepV="ngModel" required
                 [class.is-invalid]="cepV.invalid && (cepV.dirty || cepV.touched)">
                 <small class="form-text text-muted"
                   *ngIf="!(cepV.invalid && (cepV.dirty || cepV.touched))">Informe o cep.</small>
@@ -124,7 +125,7 @@
 
               <div class="col mb-3">
                 <label for="cep">Cidade<span class="text-muted">*</span></label>
-                <input type="text" class="form-control" id="cidade" [(ngModel)]="cidade" name="cidade" #cidadeV="ngModel" required
+                <input type="text" class="form-control" id="cidade" maxlength=9 [(ngModel)]="cidade" name="cidade" #cidadeV="ngModel" required
                 [class.is-invalid]="cidadeV.invalid && (cidadeV.dirty || cidadeV.touched)">
                 <small class="form-text text-muted"
                   *ngIf="!(cepV.invalid && (cepV.dirty || cepV.touched))">Informe a cidade.</small>
@@ -173,7 +174,7 @@
             <tr>
               <th scope="col"><h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Alunos cadastrados</span>
-                <span class="badge badge-secondary badge-pill" >total:{{listaDeCadastrados.length}}</span>
+                <span class="badge badge-secondary badge-pill" >Total: {{listaDeCadastrados.length}}</span>
               </h4></th>
             </tr>
           </thead>
@@ -183,7 +184,7 @@
                 <div class="row">
                   <div class="col-md-10">
                     <h6 class="my-0">{{item.nome}}</h6>
-                    <small class="text-muted">{{item.turmas}}</small>
+                    <small class="text-muted">Turmas: {{item.turmas}}</small>
                   </div>
                   <div class="col-md-2">
                     <span class="text-muted" >Sexo: {{item.sexo}}<br>Idade: {{getIdade(item.dataNascimento)}}</span>
@@ -194,6 +195,17 @@
 
           </tbody>
         </table>
+
+        <div class="container">
+          <canvas baseChart
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            [plugins]="pieChartPlugins"
+            [legend]="pieChartLegend">
+          </canvas>
+        </div>
       </div>
 
       <footer class="my-5 pt-5 text-muted text-center text-small">
