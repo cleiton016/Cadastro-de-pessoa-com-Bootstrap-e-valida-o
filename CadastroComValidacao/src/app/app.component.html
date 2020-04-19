@@ -5,11 +5,9 @@
       </div>
 
       <div class="row">
-
-
         <div class="col">
           <h4 class="mb-3">Aluno</h4>
-          <form class="needs-validation" #cadastro = "ngForm" (submit)="cadastrar()">
+          <form class="needs-validation" #cadastro = "ngForm" (submit)="cadastrar(cadastro)" name="cadastro">
             <div class="row"><!-- Inicio da row1 -->
               <div class="col-md-6 mb-3">
                 <label for="primeiroNome">Nome<span class="text-muted">*</span></label>
@@ -159,10 +157,43 @@
             </div>
             <hr class="mb-4">
             <div class="row">
-              <button class="btn btn-primary btn-lg btn-block" [disabled] = "cadastro.invalid" type="submit">Concluir cadastro</button>
+              <div *ngIf="cadastro.submitted && !cadastro.invalid" class="alert alert-success col">
+                <strong>Ótimo!</strong> O formulário está preenchido corretamente.
+              </div>
+              <button class="btn btn-primary btn-lg btn-block"  [disabled]="cadastro.invalid" type="submit">Concluir cadastro</button>
+              <button class="btn btn-secondary btn-lg btn-block" type="reset" (click)="limpaForm(cadastro)">Limpar</button>
             </div>
           </form>
         </div>
+      </div>
+      <hr>
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col"><h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Alunos cadastrados</span>
+                <span class="badge badge-secondary badge-pill" >total:{{listaDeCadastrados.length}}</span>
+              </h4></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listaDeCadastrados">
+              <th scope="row">
+                <div class="row">
+                  <div class="col-md-10">
+                    <h6 class="my-0">{{item.nome}}</h6>
+                    <small class="text-muted">{{item.turmas}}</small>
+                  </div>
+                  <div class="col-md-2">
+                    <span class="text-muted" >Sexo: {{item.sexo}}<br>Idade: {{getIdade(item.dataNascimento)}}</span>
+                  </div>
+                </div>
+              </th>
+            </tr>
+
+          </tbody>
+        </table>
       </div>
 
       <footer class="my-5 pt-5 text-muted text-center text-small">
